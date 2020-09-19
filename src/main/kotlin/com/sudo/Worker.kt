@@ -1,3 +1,3 @@
 package com.sudo
 
-interface Worker {}
+interface Worker
