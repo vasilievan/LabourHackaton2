@@ -11,4 +11,4 @@ data class Waiter(
         val q8: Map<String, String>,
         val q9: List<String>,
         val q10: List<Int>,
-)
+) : Worker
