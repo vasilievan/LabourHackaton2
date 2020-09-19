@@ -6,14 +6,29 @@ import java.nio.file.Paths
 class Parser {
     fun parseFile(path: String) {
         val fileLines = Files.readAllLines(Paths.get(path))
-        fileLines.forEach {
-            val splitedFields = it.split(";")
-            val model: JsonModel = vacancyType(splitedFields)
-            writeToJson(path, model)
+        val vacancyList = mutableListOf<Worker>()
+        for (lines in fileLines) {
+            val splitedFields = lines.split(";")
+            val model = getWorkerFromFields(splitedFields)
+            vacancyList.add(model ?: continue)
         }
+        writeToJson(path, JsonModel(vacancyList))
     }
 
-    private fun vacancyType(splitedFields: List<String>): JsonModel {
-        TODO()
+    private fun getWorkerFromFields(splitedFields: List<String>): Worker? =
+            when (understandVacancy(splitedFields[1])) {
+                "водитель" -> Driver(splitedFields)
+                "кладовщик" -> Storekeeper(splitedFields)
+                "официант" -> Waiter(splitedFields)
+                else -> null
+            }
+
+    private fun understandVacancy(name: String): String {
+        when {
+            name.contains("официант", true) -> return "официант"
+            name.contains("клад", true) -> return "кладовщик"
+            name.contains("водит", true) -> return "водитель"
+        }
+        return ""
     }
 }

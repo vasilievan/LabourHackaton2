@@ -13,4 +13,8 @@ data class Storekeeper (
         val q9: Set<String>,
         val q10: Int,
         val q11: Int
-) : Worker
+) : Worker {
+    constructor(list: List<String>) {
+
+    }
+}
