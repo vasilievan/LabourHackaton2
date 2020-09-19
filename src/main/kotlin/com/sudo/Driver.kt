@@ -24,4 +24,4 @@ data class Driver (
         val q21: Boolean,
         val q22: Boolean,
         val q23: Set<String>
-)
+) : Worker
